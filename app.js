@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 const routerProdutos = require('./route/produtos')
 const routerPedidos = require('./route/pedidos')

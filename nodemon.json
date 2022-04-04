@@ -1,0 +1,9 @@
+{
+    "env":{
+        "MYSQl_USER":"gabriel2",
+        "MYSQl_PASSWORD":"admin",
+        "MYSQl_DATABASE":"database_name",
+        "MYSQl_HOST":"localhost",
+        "MYSQl_PORT":"3306"
+    }
+}
