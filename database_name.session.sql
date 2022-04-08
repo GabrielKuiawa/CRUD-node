@@ -1,2 +1,2 @@
-select * from produtos;
+SELECT *FROM  pedidos;
     
