@@ -72,12 +72,10 @@ router.get('/:id_produto',(req,res,next)=>{
             [req.params.id_produto],
             (error,result,fields)=>{
                 if(error){return res.status(500).send({ error:error})}
-
-                if (result.lenght == 0){
-                    return res.status(404).send({   
-                         message: 'Não foi encontrado produto com este ID'
-                })
-
+                if (result.length == 0) {
+                    return res.status(404).send({
+                        message: 'Não foi encontrado produto com este ID'
+                    })
                 }
                 const response = {
                     produtoCriado: {
@@ -113,10 +111,21 @@ router.patch('/',(req,res,next)=>{
             ],                                          
             (error,resultado,field)=> {
                 conn.release();
-                if(error){return res.status(500).send({ error:error})}        
-                res.status(202).send({
-                    mensagem:'produto alterado com sucesso '
-                });
+                if(error){return res.status(500).send({ error:error})}
+                const response = {
+                    mensagem: 'produto atualizado com secesso',
+                    produtoAtualizado: {
+                        id_produto: req.body.id_produto,
+                        nome: req.body.nome,
+                        preco: req.body.preco,
+                        request:{
+                            tipo: 'GET',
+                            descricao:'atualizado',
+                            url:'http://localhost:3002/produtos/'+ req.body.id_produto
+                        }  
+                    }
+                }       
+                return res.status(202).send(response);
             }
         )
     });
@@ -130,10 +139,20 @@ router.delete('/',(req,res,next)=>{
             `DELETE FROM produtos WHERE id_produto = ?`,[req.body.id_produto],                                          
             (error,resultado,field)=> {
                 conn.release();
-                if(error){return res.status(500).send({ error:error})}        
-                res.status(202).send({
-                    mensagem:'produto deletado com sucesso '
-                });
+                if(error){return res.status(500).send({ error:error})}    
+                const response ={
+                    mensagem : 'produto removido',
+                    request:{
+                        tipo:'POST',
+                        descricao: 'apaga um produto',
+                        url:'http://localhost:3002/produtos',
+                        body:{
+                            nome:'String',
+                            preco:'Number'
+                        }
+                    }
+                }    
+                return res.status(202).send(response);
             }
         )
     });
